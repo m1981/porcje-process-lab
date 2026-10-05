@@ -1,0 +1,102 @@
+{
+  "audit": "alignment-review/0.1",
+  "performed_at": "2026-10-05T15:12:58.713904+00:00",
+  "source_commit": "4755da33795d5d984d1b75394c872ab25ffd744b",
+  "source_status": [],
+  "environment": {
+    "python": "3.13.5",
+    "system": "Linux"
+  },
+  "source_manifest_sha256": {
+    ".editorconfig": "05f9463d683e5957ca2f7cad77a5fec2986298b1ea3c6ca314174805fa1aff44",
+    ".gitattributes": "250c48456f3051da0adc6541cef06f6937a7c89ddbef59a387d980ce0e579e65",
+    ".gitignore": "4b6fddff9a529590216379a497232949c70f7843d2c0277232a4e012a21bf91f",
+    "README.md": "e6237ee189f3f6f4fc847128d8066b2299a87a370c28c252f078553f88e6ed69",
+    "contracts/record.schema.json": "f21b73681fd2b7c667d50c517633794b2400305986daddd7d4a854b6bc3298c4",
+    "contracts/semantics.md": "fe798107e20a8eb84f3175f0fbc83669e084ace5ca8fa2eecaf8bb7e7c342b36",
+    "docs/01-product.md": "e5e61a8d4beb6ea2ec669b22875d07fc785423a4f4db6afeee16134b2ce56ce4",
+    "docs/02-repository.md": "8fa8653fdde2ff3bb2babf10614e18456b9c75de2f3936281c88533efa1bf198",
+    "docs/03-test-plan.md": "b242e8f879bd612c2a9c49ded6e607aac52c1d31fce47354d5e04277b55cda6d",
+    "docs/04-source-mapping.md": "31c6f0534cc0ef840f82b10e3bf343c2eed138839d18657ec4f21c1a82b129e0",
+    "processkit/__init__.py": "b6da8a550ef76c4618c3f23d504095f456a8bf8222f216f49987e1aed174238e",
+    "processkit/io.py": "06203395ba3fe88a5ab3747bc29bfd5d161e997c14dc3c03db97cd8a6cb9c40d",
+    "processkit/model.py": "96328bdaac3ef936ea02db4988ca0baa3bdddbe7442f7b79d61806d6ad658fcd",
+    "processkit/render.py": "736e85dd5f388683b02233de86a8973a1b5fbd7d2763cd0bdbbf6d0f67bfedae",
+    "project/actors.json": "5d170e39da8f676c6d18ac059aaaf6c24d0bab551accc6c254a87db110280682",
+    "project/policy.json": "43cdc2fca68fb748d46917e38081629fd84a6bc0e7f7693c30e9887d07630f84",
+    "requirements-dev.txt": "be783877c9051e99ddc1a12c7d8ace47d9ec11d839c8c1786b62152596d4228e",
+    "src/porcje/__init__.py": "a728942fbdd84875ed07eebcd5d19ce40aadd2dccef65183f75df9b49c8d4c1b",
+    "src/porcje/core.py": "f2c20ad61daf1151c45e1fd6608c4103f50cafa33e9893aa360c42528bf23e9e",
+    "tests/__init__.py": "bb11e7bd0c56965997ef1f46e9a50078b4cfd0ce9634f5c939edc71c9334882c",
+    "tests/cases/process.json": "00df0e2ddae78a0ab0ada7d3d4ed5ba2a4be70ceee9e56cc4e85f838314c1440",
+    "tests/fixtures.py": "5a8e4d90124b07a837ff773aa3e09125f9d45d315904c46daf1b2b1edb9c2420",
+    "tests/test_process.py": "c091322b3c8a16675724e420f6823555e568ad51d84a8ceebd0709ce25fb0e66",
+    "tests/test_product.py": "5c19a2eca44fe2b1e88f030b239bdfabb6aba8960e8dc8f72762765d5d1e302e"
+  },
+  "runner_sha256": "2ff843094a107f91a14eb2dca8d3d443d1c5b081d8234993b7c713d09f7eadeb",
+  "scope": "Audit of original user goals and four-layer architecture. Synthetic probes; no human acceptance.",
+  "existing_suite": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. python -m unittest discover -v",
+    "tests": 64,
+    "passed": 64,
+    "failed": 0,
+    "exit_code": 0,
+    "log": "unit-tests.log",
+    "log_sha256": "35e7f2288fc1f591b6403c07dab965f10365b1ea2ab8d8d7ed3f19ecf05d30c3"
+  },
+  "known_bootstrap_gap": "Without PYTHONPATH=src:. discovery fails to import porcje. tools/check.py mentioned in README does not yet exist.",
+  "probe_results": [
+    {
+      "id": "AUD-UI-01",
+      "status": "FAIL",
+      "invariant": "An open risk without blocks must not appear as a work blocker.",
+      "input": {
+        "issue_category": "risk",
+        "blocks": []
+      },
+      "observed": {
+        "derived_work_blocked": false,
+        "rendered_blocker_section": "<p><code>IS-001</code> Non-blocking risk — synthetic probe — Synthetic test, not a real project approval.</p>"
+      },
+      "source": "processkit/render.py — open issues are used instead of derived blockers"
+    },
+    {
+      "id": "AUD-UI-02",
+      "status": "FAIL",
+      "invariant": "When a mandatory decision blocks work, show its decision owner as the next actionable actor, not the waiting implementer.",
+      "input": {
+        "work_next": "tester",
+        "decision_owner": "human-po",
+        "decision_state": "pending"
+      },
+      "observed": {
+        "derived_work_ready": false,
+        "derived_decision_owners": [
+          "human-po"
+        ],
+        "rendered_next_section": "<p><code>WK-001</code> Finish explicitly assigned next step<br><strong>tester</strong> · decision_pending</p>"
+      },
+      "source": "processkit/render.py — displays declared work.next while decision_owners remains unused"
+    },
+    {
+      "id": "AUD-SRC-01",
+      "status": "CAPABILITY_ABSENT",
+      "invariant": "The pipeline needs a declared adapter/source map for at least one existing non-project-JSON record.",
+      "observed": {
+        "loaded_records": 0
+      },
+      "note": "No heuristic interpretation was expected. The current loader has no declared adapter registration for existing Markdown; controlled import is not implemented."
+    }
+  ],
+  "delivery_state": {
+    "canonical_records": 0,
+    "has_build_script": false,
+    "has_check_script": false,
+    "has_static_site": false
+  },
+  "limitations": [
+    "Unit tests do not establish architectural completeness.",
+    "No independent human review or PM/PO usability trial was performed.",
+    "Single local environment; incomplete implementation on an uncommitted working tree."
+  ]
+}
